@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
@@ -57,6 +57,12 @@ const Register = () => {
     }
   };
 
+  //prevention for login user
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

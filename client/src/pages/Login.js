@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -47,14 +47,24 @@ const Login = () => {
         password: input.password,
       });
       if (data?.success) {
-        localStorage.setItem("user", data?.user);
+        console.log(data);
+        const { password, ...userWithoutPassword } = data.user;
+        localStorage.setItem("user", JSON.stringify(userWithoutPassword));
         alert("Login Successful!");
         navigate("/");
+      } else {
+        alert("User Not Registered");
       }
     } catch (error) {
       console.log(error);
     }
   };
+  //prevention for login user
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <ThemeProvider theme={theme}>

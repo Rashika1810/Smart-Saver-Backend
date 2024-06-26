@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
-const expenseSchema = new mongoose.Schema(
+const transactionSchema = new mongoose.Schema(
   {
-    amout: {
-      type: number,
+    amount: {
+      type: Number,
       required: [true, "Amount is required"],
     },
-    catgeory: {
+    category: {
       type: String,
       required: [true, "Category is required"],
     },
-    refrence: {
+    reference: {
       type: String,
     },
     description: {
@@ -22,8 +22,8 @@ const expenseSchema = new mongoose.Schema(
       required: [true, "Date is required"],
     },
   },
-  { timestamps }
+  { timestamps: true }
 );
 
-const expenseModel = mongoose.model("Expense", expenseSchema);
-module.exports = expenseModel;
+const transactionModel = mongoose.model("Expense", transactionSchema);
+module.exports = transactionModel;

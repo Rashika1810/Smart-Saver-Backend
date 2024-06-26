@@ -13,6 +13,7 @@ connectDb();
 
 //importing all the routes
 const userRoutes = require("./routes/userRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
 
 //rest objects
 const app = express();
@@ -25,6 +26,7 @@ app.use(cors());
 //routes
 //user routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/transaction", transactionRoutes);
 
 //port
 const PORT = 8080 || process.env.PORT;

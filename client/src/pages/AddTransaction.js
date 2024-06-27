@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -43,19 +44,16 @@ const AddTransaction = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "/api/v1/transaction//add-transaction",
-        {
-          amount: inputs.amount,
-          type: inputs.type,
-          category: inputs.category,
-          description: inputs.description,
-          date: inputs.date,
-        }
-      );
+      const user = JSON.parse(localStorage.getItem("user"));
+      const { data } = await axios.post("/api/v1/transaction/add-transaction", {
+        amount: inputs.amount,
+        type: inputs.type,
+        category: inputs.category,
+        description: inputs.description,
+        date: inputs.date,
+        userid: user._id,
+      });
       if (data?.success) {
-        console.log(data);
-
         alert("Transaction Added Successfully!");
         navigate("/");
         setInputs(initialState);
@@ -67,7 +65,13 @@ const AddTransaction = () => {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setInputs({ ...inputs, [id]: value });
+
+    // Ensure description does not exceed 20 characters
+    if (id === "description" && value.length > 20) {
+      return; // Do not update state if more than 20 characters
+    }
+
+    setInputs({ ...inputs, [id]: value.slice(0, 20) }); // Limit to 20 characters
   };
 
   const handleTypeChange = (e) => {
@@ -215,6 +219,8 @@ const AddTransaction = () => {
                   style: { color: theme.palette.primary.main },
                 }}
                 InputProps={{ style: { color: theme.palette.primary.main } }}
+                maxLength={30}
+                placeholder="Max 30 characters"
               />
             </Grid>
             <Grid item xs={12} sm={6}>

@@ -11,16 +11,17 @@ import {
   Link,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink, useNavigate } from "react-router-dom"; // Import RouterLink from react-router-dom
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import loginImage from "../assests/bg.jpg";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#FFFFFF", // White color
+      main: "#FFFFFF",
     },
     secondary: {
-      main: "#0D47A1", // Dark blue color
+      main: "#0D47A1",
     },
   },
 });
@@ -59,7 +60,7 @@ const Login = () => {
       console.log(error);
     }
   };
-  //prevention for login user
+
   useEffect(() => {
     if (localStorage.getItem("user")) {
       navigate("/");
@@ -69,30 +70,60 @@ const Login = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+          zIndex: -1,
+        }}
+      >
+        <img
+          src={loginImage}
+          alt="Login Background"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      </Box>
       <Container
         component="main"
-        maxWidth="xs"
+        maxWidth="md"
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
+          padding: 0,
+          position: "relative",
+          zIndex: 1,
         }}
       >
-        <Paper elevation={3} sx={{ padding: 3, mt: 8, width: "100%" }}>
-          <Typography
-            component="h1"
-            variant="h5"
-            textAlign="center"
-            gutterBottom
-            sx={{ color: "secondary.main" }}
-          >
-            Login
-          </Typography>
-          <Box component="form" onSubmit={handleLoginSubmit} sx={{ mt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={2}
+          sx={{ height: "100%" }}
+        >
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} sx={{ padding: 3, maxWidth: 400 }}>
+              <Typography
+                component="h1"
+                variant="h5"
+                textAlign="center"
+                gutterBottom
+                sx={{ color: "secondary.main" }}
+              >
+                Login
+              </Typography>
+              <Box component="form" onSubmit={handleLoginSubmit}>
                 <TextField
                   fullWidth
                   id="login-email"
@@ -128,8 +159,6 @@ const Login = () => {
                     },
                   }}
                 />
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id="login-password"
@@ -144,6 +173,7 @@ const Login = () => {
                     style: { color: theme.palette.secondary.main },
                   }}
                   sx={{
+                    mt: 2,
                     bgcolor: "primary.main",
                     borderRadius: 1,
                     "& .MuiOutlinedInput-root": {
@@ -165,25 +195,30 @@ const Login = () => {
                     },
                   }}
                 />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="secondary"
-              sx={{ mt: 3, mb: 2, color: "primary.main", borderRadius: 1 }}
-            >
-              Login
-            </Button>
-          </Box>
-          <Typography variant="body2" align="center">
-            New user?{" "}
-            <Link component={RouterLink} to="/register" color="secondary">
-              Create an account
-            </Link>
-          </Typography>
-        </Paper>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    color: "primary.main",
+                    borderRadius: 1,
+                  }}
+                >
+                  Login
+                </Button>
+              </Box>
+              <Typography variant="body2" align="center">
+                New user?{" "}
+                <Link component={RouterLink} to="/register" color="secondary">
+                  Create an account
+                </Link>
+              </Typography>
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     </ThemeProvider>
   );

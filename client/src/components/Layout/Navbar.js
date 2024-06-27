@@ -29,8 +29,8 @@ const Navbar = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
       localStorage.removeItem("user");
-      alert("Logout Successful");
       navigate("/login");
+      alert("Logout Successful");
     }
   };
 
@@ -51,7 +51,7 @@ const Navbar = () => {
           <>
             <ListItem>
               <ListItemText
-                primary={`Welcome, ${loginUser.name}`}
+                primary={`Welcome, ${loginUser.name.split(" ")[0]}`} // Displaying only the first name
                 sx={{ color: "#FFFFFF" }}
               />
             </ListItem>
@@ -90,7 +90,8 @@ const Navbar = () => {
                   <Typography
                     sx={{ color: "white", fontWeight: "bold", marginRight: 2 }}
                   >
-                    Welcome, {loginUser.name}
+                    Welcome, {loginUser.name.split(" ")[0]}{" "}
+                    {/* Displaying only the first name */}
                   </Typography>
                   <Button
                     onClick={handleLogout}

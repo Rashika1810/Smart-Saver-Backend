@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

@@ -12,15 +12,16 @@ import {
   Link,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink, useNavigate } from "react-router-dom"; // Import RouterLink from react-router-dom
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import registerImage from "../assests/bg.jpg";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#FFFFFF", // White color
+      main: "#FFFFFF",
     },
     secondary: {
-      main: "#0D47A1", // Dark blue color
+      main: "#0D47A1",
     },
   },
 });
@@ -57,15 +58,36 @@ const Register = () => {
     }
   };
 
-  //prevention for login user
   useEffect(() => {
     if (localStorage.getItem("user")) {
       navigate("/");
     }
   }, [navigate]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "50%",
+          height: "100vh",
+          overflow: "hidden",
+          zIndex: -1,
+        }}
+      >
+        <img
+          src={registerImage}
+          alt="Register Background"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      </Box>
       <Container
         component="main"
         maxWidth="xs"
@@ -75,6 +97,8 @@ const Register = () => {
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <Paper elevation={3} sx={{ padding: 3, mt: 8, width: "100%" }}>

@@ -3,10 +3,12 @@ const transactionModel = require("../models/transactionModel");
 const getAllTransaction = async (req, resp) => {
   try {
     const transaction = await transactionModel.find({});
+    const count = await transactionModel.countDocuments({});
 
-    return resp.status(500).send({
+    return resp.status(200).send({
       success: true,
       message: "Fetched all transaction",
+      length: count,
       transaction,
     });
   } catch (error) {
@@ -20,10 +22,10 @@ const getAllTransaction = async (req, resp) => {
 };
 const addTransaction = async (req, resp) => {
   try {
-    const { amount, category, description, date, reference } = req.body;
+    const { amount, type, category, description, date, reference } = req.body;
 
     //user validation
-    if (!amount || !category || !description || !date) {
+    if (!amount || !type || !category || !description || !date) {
       return resp.status(400).send({
         success: false,
         message: "All fields are required.",
@@ -31,6 +33,7 @@ const addTransaction = async (req, resp) => {
     }
     const newTransaction = new transactionModel({
       amount: Number(amount),
+      type,
       category,
       description,
       date,

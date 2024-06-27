@@ -190,9 +190,11 @@ const AddTransaction = () => {
                 </MenuItem>
                 <MenuItem value="tip">Tip</MenuItem>
                 <MenuItem value="salary">Salary</MenuItem>
+                <MenuItem value="bills">Bills</MenuItem>
                 <MenuItem value="education">Education</MenuItem>
                 <MenuItem value="healthcare">Healthcare</MenuItem>
                 <MenuItem value="shopping">Shopping</MenuItem>
+                <MenuItem value="entertainment">Entertainment</MenuItem>
                 <MenuItem value="scholarships">Scholarships</MenuItem>
                 <MenuItem value="travel">Travel</MenuItem>
                 <MenuItem value="groceries">Groceries</MenuItem>

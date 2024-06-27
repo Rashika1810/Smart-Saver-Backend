@@ -1,9 +1,15 @@
 const transactionModel = require("../models/transactionModel");
-
+const moment = require("moment");
 const getAllTransaction = async (req, resp) => {
   try {
+    const { frequency, type, category } = req.body;
     const transaction = await transactionModel.find({
+      date: {
+        $gt: moment().subtract(Number(frequency), "d").toDate(),
+      },
       userid: req.body.userid,
+      ...(type !== "all" && { type }),
+      ...(category != "all" && { category }),
     });
     const count = await transactionModel.countDocuments({
       userid: req.body.userid,

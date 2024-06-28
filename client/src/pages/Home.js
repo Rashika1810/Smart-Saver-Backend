@@ -15,14 +15,15 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Grid,
 } from "@mui/material";
 
 import AddTransactionModal from "../components/Layout/AddTransactionModal";
-import axios from "axios";
+import axios, { all } from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { padding } from "@mui/system";
+import TableChartIcon from "@mui/icons-material/TableChart";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import Analytics from "../components/Analytics";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ const Home = () => {
   const [frequency, setFrequency] = useState("7");
   const [type, setType] = useState("all");
   const [category, setCategory] = useState("all");
+  const [tableView, setTableView] = useState("table");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -81,6 +83,12 @@ const Home = () => {
     // Implement delete functionality here
   };
 
+  const handleTableViewChange = (view) => {
+    setTableView(view);
+  };
+
+  const isTableView = tableView === "table";
+
   return (
     <Layout>
       <Box
@@ -125,6 +133,7 @@ const Home = () => {
               displayEmpty
               inputProps={{ "aria-label": "Filter by Date Frequency" }}
             >
+              <MenuItem value="all">All</MenuItem>
               <MenuItem value="7">Last 1 Week</MenuItem>
               <MenuItem value="30">Last 1 Month</MenuItem>
               <MenuItem value="365">Last 1 Year</MenuItem>
@@ -174,14 +183,60 @@ const Home = () => {
               <MenuItem value="personal use">Personal Use</MenuItem>
               <MenuItem value="food">Food</MenuItem>
               <MenuItem value="fees">Fees</MenuItem>
+              <MenuItem value="tax">Tax</MenuItem>
               <MenuItem value="other">Other</MenuItem>
             </Select>
           </FormControl>
         </Box>
       </Box>
 
-      {/* Conditionally render table if there are transactions */}
-      {allTransactions.length > 0 ? (
+      {/* Table and Graph view icons */}
+      <Box
+        display="flex"
+        justifyContent="right"
+        m={2}
+        flexWrap="wrap"
+        sx={{ justifyContent: "right" }}
+      >
+        <Box
+          display="flex"
+          justifyContent="right"
+          alignItems="center"
+          width="200"
+          flexDirection="column"
+          border={2}
+          borderColor="#1976d2"
+          mb={2}
+          sx={{
+            backgroundColor: "white",
+
+            p: 1,
+            borderRadius: 1,
+            maxWidth: 100,
+            flexDirection: "row",
+          }}
+        >
+          <IconButton
+            onClick={() => handleTableViewChange("table")}
+            color={isTableView ? "primary" : "default"}
+            aria-label="table view"
+            sx={{ color: isTableView ? "#1976d2" : "inherit" }} // Blue color when active
+          >
+            <TableChartIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => handleTableViewChange("graph")}
+            color={isTableView ? "default" : "primary"}
+            aria-label="graph view"
+            sx={{ color: isTableView ? "inherit" : "#1976d2" }} // Blue color when active
+          >
+            <BarChartIcon />
+          </IconButton>
+        </Box>
+      </Box>
+
+      {/* Conditionally render table or graph view */}
+      {isTableView ? (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
@@ -247,20 +302,10 @@ const Home = () => {
           </Table>
         </TableContainer>
       ) : (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="60vh"
-        >
-          <Typography
-            variant="h4"
-            align="center"
-            style={{ color: "#1976d2", fontWeight: "bold" }}
-          >
-            No Transactions Available...
-          </Typography>
-        </Box>
+        <div>
+          {/* Placeholder for graph view */}
+          <Analytics allTransactions={allTransactions} />
+        </div>
       )}
       <AddTransactionModal open={open} handleClose={handleClose} />
     </Layout>

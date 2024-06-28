@@ -202,6 +202,7 @@ const AddTransaction = () => {
                 <MenuItem value="personal use">Personal Use</MenuItem>
                 <MenuItem value="food">Food</MenuItem>
                 <MenuItem value="fees">Fees</MenuItem>
+                <MenuItem value="tax">Tax</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
               </Select>
             </Grid>
@@ -221,8 +222,8 @@ const AddTransaction = () => {
                   style: { color: theme.palette.primary.main },
                 }}
                 InputProps={{ style: { color: theme.palette.primary.main } }}
-                maxLength={30}
-                placeholder="Max 30 characters"
+                maxLength={50}
+                placeholder="Max 50 characters"
               />
             </Grid>
             <Grid item xs={12} sm={6}>

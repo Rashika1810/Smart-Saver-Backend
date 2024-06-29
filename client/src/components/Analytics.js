@@ -253,7 +253,7 @@ const Analytics = ({ allTransactions }) => {
                 borderTopRightRadius: 2,
               }}
             >
-              Turnover Records
+              Money Transactions
             </Typography>
             <Box
               display="flex"
@@ -271,11 +271,26 @@ const Analytics = ({ allTransactions }) => {
                   pb: 1,
                 }}
               >
+                <Typography variant="body2">Remaining Balance</Typography>
+                <Typography variant="body2">
+                  ₹ {totalIncomeTurnOver - totalExpenseTurnOver}
+                </Typography>
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={2}
+                sx={{
+                  borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                  pb: 1,
+                }}
+              >
                 <Typography variant="body2" color="#209e25">
-                  Total Turnover
+                  Total Income
                 </Typography>
                 <Typography variant="body2" color="#209e25">
-                  ₹ {totalTurnOver}
+                  ₹ {totalIncomeTurnOver}
                 </Typography>
               </Box>
               <Box
@@ -289,27 +304,13 @@ const Analytics = ({ allTransactions }) => {
                 }}
               >
                 <Typography variant="body2" color="#f44336">
-                  Total Expense Turnover
+                  Total Expense
                 </Typography>
                 <Typography variant="body2" color="#f44336">
                   ₹ {totalExpenseTurnOver}
                 </Typography>
               </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={2}
-                sx={{
-                  borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
-                  pb: 1,
-                }}
-              >
-                <Typography variant="body2">Remaining Amount</Typography>
-                <Typography variant="body2">
-                  ₹ {totalTurnOver - totalExpenseTurnOver}
-                </Typography>
-              </Box>
+
               <Box
                 display="flex"
                 flexDirection={{ xs: "column", sm: "row" }}

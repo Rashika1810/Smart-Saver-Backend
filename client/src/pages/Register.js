@@ -33,6 +33,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     setInput({
@@ -43,6 +44,16 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Password validation on submit
+    if (!validatePassword(input.password)) {
+      setPasswordError(
+        "Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character."
+      );
+      return;
+    } else {
+      setPasswordError("");
+    }
+
     try {
       const { data } = await axios.post("/api/v1/user/register", {
         name: input.name,
@@ -56,6 +67,13 @@ const Register = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    return passwordRegex.test(password);
   };
 
   useEffect(() => {
@@ -196,6 +214,8 @@ const Register = () => {
                   autoComplete="current-password"
                   value={input.password}
                   onChange={handleChange}
+                  error={!!passwordError}
+                  helperText={passwordError}
                   InputLabelProps={{
                     shrink: true,
                     style: { color: theme.palette.secondary.main },

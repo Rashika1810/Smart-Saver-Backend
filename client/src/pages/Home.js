@@ -18,25 +18,51 @@ import {
 } from "@mui/material";
 
 import AddTransactionModal from "../components/Layout/AddTransactionModal";
-import axios, { all } from "axios";
+
+import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import Analytics from "../components/Analytics";
+import EditTransactionModal from "../components/EditTransactionModal";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [open, setOpen] = useState(false);
+  const [openAddTransaction, setOpenAddTransaction] = useState(false);
+  const [openEditTransaction, setOpenEditTransaction] = useState(false);
   const [allTransactions, setAllTransactions] = useState([]);
-  const [frequency, setFrequency] = useState("7");
+  const [frequency, setFrequency] = useState("all");
   const [type, setType] = useState("all");
   const [category, setCategory] = useState("all");
   const [tableView, setTableView] = useState("table");
+  const [editTransactionData, setEditTransactionData] = useState(null);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpenAddTransaction = () => setOpenAddTransaction(true);
+  const handleCloseAddTransaction = () => {
+    setOpenAddTransaction(false);
+    getAllTransactions();
+  };
 
-  // Fetch transactions based on frequency, type, and category
+  const navigate = useNavigate();
+  const handleOpenEditTransaction = (transactionId) => {
+    const transactionToEdit = allTransactions.find(
+      (transaction) => transaction._id === transactionId
+    );
+    if (transactionToEdit) {
+      setEditTransactionData(transactionToEdit);
+      setOpenEditTransaction(true);
+    } else {
+      console.log("Transaction not found for editing");
+    }
+  };
+
+  const handleCloseEditTransaction = () => {
+    setOpenEditTransaction(false);
+    setEditTransactionData(null);
+    getAllTransactions();
+  };
+
   const getAllTransactions = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -73,14 +99,19 @@ const Home = () => {
     fontWeight: "bold",
   };
 
-  const handleEdit = (transactionId) => {
-    console.log("Edit transaction with ID:", transactionId);
-    // Implement edit functionality here
-  };
-
-  const handleDelete = (transactionId) => {
-    console.log("Delete transaction with ID:", transactionId);
-    // Implement delete functionality here
+  const handleDelete = async (transactionId) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/transaction/delete-transaction/${transactionId}`
+      );
+      if (data.success) {
+        alert("Transaction deleted Successfully");
+        getAllTransactions();
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Error in deleting transactions");
+    }
   };
 
   const handleTableViewChange = (view) => {
@@ -102,7 +133,7 @@ const Home = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleOpen}
+          onClick={handleOpenAddTransaction}
           sx={{
             minWidth: 180,
             mb: 2,
@@ -120,7 +151,7 @@ const Home = () => {
           justifyContent="flex-end"
           alignItems="center"
           flexWrap="wrap"
-          sx={{ gap: 2, ml: "auto", minWidth: 180 }} // Ensure a minimum width for the container
+          sx={{ gap: 2, ml: "auto", minWidth: 180 }}
         >
           {/* Date Frequency Filter */}
           <FormControl
@@ -220,7 +251,7 @@ const Home = () => {
             onClick={() => handleTableViewChange("table")}
             color={isTableView ? "primary" : "default"}
             aria-label="table view"
-            sx={{ color: isTableView ? "#1976d2" : "inherit" }} // Blue color when active
+            sx={{ color: isTableView ? "#1976d2" : "inherit" }}
           >
             <TableChartIcon />
           </IconButton>
@@ -228,7 +259,7 @@ const Home = () => {
             onClick={() => handleTableViewChange("graph")}
             color={isTableView ? "default" : "primary"}
             aria-label="graph view"
-            sx={{ color: isTableView ? "inherit" : "#1976d2" }} // Blue color when active
+            sx={{ color: isTableView ? "inherit" : "#1976d2" }}
           >
             <BarChartIcon />
           </IconButton>
@@ -236,7 +267,16 @@ const Home = () => {
       </Box>
 
       {/* Conditionally render table or graph view */}
-      {isTableView ? (
+      {allTransactions.length === 0 ? (
+        <Typography
+          variant="h4"
+          align="center"
+          color="#1976d2"
+          fontWeight="bold"
+        >
+          No Transactions Available
+        </Typography>
+      ) : isTableView ? (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
@@ -284,7 +324,7 @@ const Home = () => {
                     <IconButton
                       color="primary"
                       aria-label="edit transaction"
-                      onClick={() => handleEdit(transaction._id)}
+                      onClick={() => handleOpenEditTransaction(transaction._id)}
                     >
                       <EditIcon />
                     </IconButton>
@@ -303,11 +343,21 @@ const Home = () => {
         </TableContainer>
       ) : (
         <div>
-          {/* Placeholder for graph view */}
           <Analytics allTransactions={allTransactions} />
         </div>
       )}
-      <AddTransactionModal open={open} handleClose={handleClose} />
+      {/* Render EditTransactionModal */}
+      <EditTransactionModal
+        open={openEditTransaction}
+        onClose={handleCloseEditTransaction}
+        transaction={editTransactionData}
+      />
+
+      {/* Render AddTransactionModal */}
+      <AddTransactionModal
+        open={openAddTransaction}
+        handleClose={handleCloseAddTransaction}
+      />
     </Layout>
   );
 };

@@ -23,7 +23,10 @@ const AllTransactions = () => {
 
   return (
     <Container>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: "100%", overflow: "hidden" }}
+      >
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>

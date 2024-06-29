@@ -66,12 +66,11 @@ const AddTransaction = () => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
 
-    // Ensure description does not exceed 20 characters
-    if (id === "description" && value.length > 20) {
-      return; // Do not update state if more than 20 characters
+    if (id === "description" && value.length > 50) {
+      return;
     }
 
-    setInputs({ ...inputs, [id]: value.slice(0, 20) }); // Limit to 20 characters
+    setInputs({ ...inputs, [id]: value.slice(0, 50) });
   };
 
   const handleTypeChange = (e) => {

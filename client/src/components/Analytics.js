@@ -6,7 +6,6 @@ import {
   Box,
   CircularProgress,
   Grid,
-  LinearProgress,
 } from "@mui/material";
 
 const Analytics = ({ allTransactions }) => {
@@ -91,7 +90,7 @@ const Analytics = ({ allTransactions }) => {
                 // width: "100%",
                 backgroundColor: "#1976d2",
                 color: "white",
-                padding: "12px 16px", // Adjust padding for top and bottom spacing
+                padding: "12px 16px",
                 borderTopLeftRadius: 2,
                 borderTopRightRadius: 2,
               }}
@@ -102,7 +101,7 @@ const Analytics = ({ allTransactions }) => {
               display="flex"
               flexDirection="column"
               alignItems="stretch"
-              sx={{ padding: "16px" }} // Add padding inside the CardContent
+              sx={{ padding: "16px" }}
             >
               <Box
                 display="flex"
@@ -156,7 +155,7 @@ const Analytics = ({ allTransactions }) => {
                 flexDirection={{ xs: "column", sm: "row" }}
                 justifyContent="center"
                 alignItems="center"
-                mt={2} // Margin top to separate from previous content
+                mt={2}
               >
                 {totalIncomePercent > 0 && (
                   <Grid item xs={12} sm={6}>
@@ -174,7 +173,7 @@ const Analytics = ({ allTransactions }) => {
                       <CircularProgress
                         variant="determinate"
                         value={totalIncomePercent}
-                        size={80} // Larger size
+                        size={80}
                         thickness={2}
                         sx={{
                           color: "#4caf50",
@@ -192,7 +191,7 @@ const Analytics = ({ allTransactions }) => {
                         sx={{
                           position: "absolute",
                           fontWeight: "bold",
-                          fontSize: "0.8em", // Adjust font size if needed
+                          fontSize: "0.8em",
                         }}
                       >
                         {totalIncomePercent}%
@@ -216,7 +215,7 @@ const Analytics = ({ allTransactions }) => {
                       <CircularProgress
                         variant="determinate"
                         value={totalExpensePercent}
-                        size={80} // Larger size
+                        size={80}
                         thickness={2}
                         sx={{
                           color: "#f44336",
@@ -234,7 +233,7 @@ const Analytics = ({ allTransactions }) => {
                         sx={{
                           position: "absolute",
                           fontWeight: "bold",
-                          fontSize: "0.8em", // Adjust font size if needed
+                          fontSize: "0.8em",
                         }}
                       >
                         {totalExpensePercent}%
@@ -256,7 +255,6 @@ const Analytics = ({ allTransactions }) => {
             boxShadow: 3,
             // maxWidth: 400,
             width: "100%",
-            // marginLeft: { xs: 0, sm: 2 }, // Add margin left only on small screens
           }}
         >
           <CardContent sx={{ padding: 0 }}>
@@ -269,7 +267,7 @@ const Analytics = ({ allTransactions }) => {
                 width: "100%",
                 backgroundColor: "#1976d2",
                 color: "white",
-                padding: "12px 16px", // Adjust padding for top and bottom spacing
+                padding: "12px 16px",
                 borderTopLeftRadius: 2,
                 borderTopRightRadius: 2,
               }}
@@ -280,7 +278,7 @@ const Analytics = ({ allTransactions }) => {
               display="flex"
               flexDirection="column"
               alignItems="stretch"
-              sx={{ padding: "16px" }} // Add padding inside the CardContent
+              sx={{ padding: "16px" }}
             >
               <Box
                 display="flex"
@@ -334,7 +332,7 @@ const Analytics = ({ allTransactions }) => {
                 flexDirection={{ xs: "column", sm: "row" }}
                 justifyContent="center"
                 alignItems="center"
-                mt={2} // Margin top to separate from previous content
+                mt={2}
               >
                 {totalIncomePercent > 0 && (
                   <Grid item xs={12} sm={6}>
@@ -352,7 +350,7 @@ const Analytics = ({ allTransactions }) => {
                       <CircularProgress
                         variant="determinate"
                         value={totalIncomeTurnOverPercent}
-                        size={80} // Larger size
+                        size={80}
                         thickness={2}
                         sx={{
                           color: "#4caf50",
@@ -370,7 +368,7 @@ const Analytics = ({ allTransactions }) => {
                         sx={{
                           position: "absolute",
                           fontWeight: "bold",
-                          fontSize: "0.8em", // Adjust font size if needed
+                          fontSize: "0.8em",
                         }}
                       >
                         {totalIncomeTurnOverPercent}%
@@ -394,7 +392,7 @@ const Analytics = ({ allTransactions }) => {
                       <CircularProgress
                         variant="determinate"
                         value={totalExpenseTurnOverPercent}
-                        size={80} // Larger size
+                        size={80}
                         thickness={2}
                         sx={{
                           color: "#f44336",
@@ -412,7 +410,7 @@ const Analytics = ({ allTransactions }) => {
                         sx={{
                           position: "absolute",
                           fontWeight: "bold",
-                          fontSize: "0.8em", // Adjust font size if needed
+                          fontSize: "0.8em",
                         }}
                       >
                         {totalExpenseTurnOverPercent}%

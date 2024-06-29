@@ -84,7 +84,7 @@ const editTransaction = async (req, resp) => {
     return resp.status(200).send({
       success: true,
       message: "Transaction Edited!",
-      blog,
+      transaction,
     });
   } catch (error) {
     console.log(error);

@@ -23,7 +23,7 @@ const loginController = async (req, resp) => {
     if (!matchPassword) {
       return resp.status(401).send({
         success: false,
-        message: "Invlid username or password",
+        message: "Invalid Email or password",
       });
     }
     return resp.status(200).send({

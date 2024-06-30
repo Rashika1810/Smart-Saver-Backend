@@ -58,12 +58,24 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(userWithoutPassword));
         toast.success("Login Successful!");
         navigate("/home");
+      } else if (
+        data?.success === false &&
+        data?.message === "Invalid Email or password"
+      ) {
+        toast.error("Invalid Email or Password");
       } else {
-        toast.error("User Not Registered");
+        toast.error("Login failed. Please try again.");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Error logging in. Please try again later.");
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.data);
+        toast.error(error.response.data.message || "Error in login");
+      } else if (error.request) {
+        console.log("No response received from server:", error.request);
+        toast.error("No response from server. Please try again later.");
+      } else {
+        console.log("Error in setting up request:", error.message);
+      }
     }
   };
 

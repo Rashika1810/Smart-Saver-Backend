@@ -67,9 +67,25 @@ const Register = () => {
       if (data?.success) {
         toast.success("Registered Successfully!");
         navigate("/login");
+      } else if (
+        data?.success === false &&
+        data?.message === "User already exists."
+      ) {
+        toast.error("User Already Registered");
+      } else {
+        toast.error("Registration failed. Please try again.");
       }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.data);
+        toast.error(error.response.data.message || "Error in registration");
+      } else if (error.request) {
+        console.log("No response received from server:", error.request);
+        toast.error("No response from server. Please try again later.");
+      } else {
+        console.log("Error in setting up request:", error.message);
+        toast.error("Error in setting up registration. Please try again.");
+      }
     }
   };
 
